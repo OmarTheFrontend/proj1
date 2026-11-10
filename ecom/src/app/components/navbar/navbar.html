@@ -1,0 +1,120 @@
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-emerald-100">
+  <!-- Top promotional banner -->
+  <div class="bg-emerald-700 text-white text-xs py-2 px-4 text-center font-medium flex items-center justify-center gap-2">
+    <span>🌱 Free Express Delivery on Orders Over $50! Use code <strong class="underline">FRESH2026</strong></span>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3">
+        <a routerLink="/" class="flex items-center gap-2 group">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white text-2xl shadow-md group-hover:scale-105 transition-transform">
+            🛒
+          </div>
+          <div class="flex flex-col">
+            <span class="text-2xl font-black tracking-tight text-gray-900 font-sans">Fresh<span class="text-emerald-600">Cart</span></span>
+            <span class="text-[10px] tracking-widest uppercase text-gray-500 font-semibold -mt-1">Organic Market</span>
+          </div>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 font-medium text-gray-700">
+        <a routerLink="/" routerLinkActive="text-emerald-600 font-semibold" [routerLinkActiveOptions]="{exact: true}" class="hover:text-emerald-600 transition-colors">Home</a>
+        <a routerLink="/shop" routerLinkActive="text-emerald-600 font-semibold" class="hover:text-emerald-600 transition-colors">Shop</a>
+        <a routerLink="/categories" routerLinkActive="text-emerald-600 font-semibold" class="hover:text-emerald-600 transition-colors">Categories</a>
+        <a routerLink="/brands" routerLinkActive="text-emerald-600 font-semibold" class="hover:text-emerald-600 transition-colors">Brands</a>
+      </nav>
+
+      <!-- Search bar & Actions -->
+      <div class="hidden lg:flex items-center flex-1 max-w-xs mx-8">
+        <form (submit)="onSearch($event)" class="w-full relative">
+          <input 
+            type="text" 
+            [(ngModel)]="searchQuery" 
+            name="searchQuery" 
+            placeholder="Search groceries, dairy..." 
+            class="w-full bg-gray-50 text-sm text-gray-800 rounded-full pl-4 pr-10 py-2 border border-gray-200 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-all"
+          />
+          <button type="submit" class="absolute right-3 top-2.5 text-gray-400 hover:text-emerald-600">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Action Icons (Wishlist & Cart) -->
+      <div class="flex items-center gap-4">
+        <!-- Wishlist -->
+        <a routerLink="/wishlist" class="relative p-2.5 rounded-full hover:bg-emerald-50 text-gray-700 hover:text-emerald-600 transition-colors" title="Wishlist">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+          </svg>
+          @if (wishlistService.count() > 0) {
+            <span class="absolute top-1 right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center animate-pulse">
+              {{ wishlistService.count() }}
+            </span>
+          }
+        </a>
+
+        <!-- Cart -->
+        <a routerLink="/cart" class="relative flex items-center gap-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 px-4 py-2.5 rounded-full font-semibold transition-all shadow-sm">
+          <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+          </svg>
+          <span class="hidden sm:inline">${{ cartService.subtotal().toFixed(2) }}</span>
+          @if (cartService.totalItemsCount() > 0) {
+            <span class="absolute -top-1 -right-1 bg-emerald-600 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center shadow">
+              {{ cartService.totalItemsCount() }}
+            </span>
+          }
+        </a>
+
+        <!-- Mobile menu toggle button -->
+        <button (click)="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            @if (!mobileMenuOpen) {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            } @else {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            }
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  @if (mobileMenuOpen) {
+    <div class="md:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-6 space-y-3 animate-fadeIn">
+      <form (submit)="onSearch($event); closeMobileMenu()" class="relative mb-4">
+        <input 
+          type="text" 
+          [(ngModel)]="searchQuery" 
+          name="mobileSearch" 
+          placeholder="Search products..." 
+          class="w-full bg-gray-50 text-sm rounded-full pl-4 pr-10 py-2 border border-gray-200 focus:outline-none focus:border-emerald-500"
+        />
+        <button type="submit" class="absolute right-3 top-2.5 text-gray-400">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </button>
+      </form>
+      <nav class="flex flex-col space-y-2 font-medium text-gray-700">
+        <a routerLink="/" (click)="closeMobileMenu()" class="px-3 py-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-600">Home</a>
+        <a routerLink="/shop" (click)="closeMobileMenu()" class="px-3 py-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-600">Shop</a>
+        <a routerLink="/categories" (click)="closeMobileMenu()" class="px-3 py-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-600">Categories</a>
+        <a routerLink="/brands" (click)="closeMobileMenu()" class="px-3 py-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-600">Brands</a>
+        <a routerLink="/wishlist" (click)="closeMobileMenu()" class="px-3 py-2 rounded-lg hover:bg-emerald-50 hover:text-emerald-600 flex items-center justify-between">
+          <span>Wishlist</span>
+          <span class="bg-rose-100 text-rose-600 text-xs px-2 py-0.5 rounded-full font-bold">{{ wishlistService.count() }}</span>
+        </a>
+      </nav>
+    </div>
+  }
+</header>

@@ -1,0 +1,70 @@
+<footer class="bg-gray-900 text-gray-300 pt-16 pb-12 border-t border-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+      
+      <!-- Brand & Info -->
+      <div class="lg:col-span-2 space-y-4">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white text-2xl font-bold shadow">
+            🛒
+          </div>
+          <span class="text-2xl font-black text-white tracking-tight">Fresh<span class="text-emerald-400">Cart</span></span>
+        </div>
+        <p class="text-sm text-gray-400 leading-relaxed pr-4">
+          FreshCart is your premier organic online grocery store delivering farm-fresh produce, artisanal dairy, and wholesome snacks straight to your doorstep with zero hassle.
+        </p>
+        <div class="pt-2 text-xs text-gray-500">
+          © 2026 FreshCart Inc. All rights reserved. Built with Angular & Tailwind CSS.
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Quick Links</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a routerLink="/" class="hover:text-emerald-400 transition-colors">Home Page</a></li>
+          <li><a routerLink="/shop" class="hover:text-emerald-400 transition-colors">Browse Shop</a></li>
+          <li><a routerLink="/categories" class="hover:text-emerald-400 transition-colors">All Categories</a></li>
+          <li><a routerLink="/brands" class="hover:text-emerald-400 transition-colors">Partner Brands</a></li>
+        </ul>
+      </div>
+
+      <!-- Customer Service -->
+      <div>
+        <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Customer Care</h4>
+        <ul class="space-y-2.5 text-sm">
+          <li><a routerLink="/cart" class="hover:text-emerald-400 transition-colors">Shopping Cart</a></li>
+          <li><a routerLink="/wishlist" class="hover:text-emerald-400 transition-colors">My Wishlist</a></li>
+          <li><a href="#" class="hover:text-emerald-400 transition-colors">Shipping & Returns</a></li>
+          <li><a href="#" class="hover:text-emerald-400 transition-colors">Privacy Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div>
+        <h4 class="text-white font-semibold text-sm uppercase tracking-wider mb-4">Stay Connected</h4>
+        <p class="text-xs text-gray-400 mb-3">Subscribe to get special offers, free organic giveaways, and weekly recipes.</p>
+        @if (subscribed) {
+          <div class="bg-emerald-900/50 border border-emerald-500 text-emerald-300 text-xs p-3 rounded-lg">
+            🎉 Thank you for subscribing! Check your inbox for your 10% coupon code.
+          </div>
+        } @else {
+          <form (submit)="onSubscribe($event)" class="space-y-2">
+            <input 
+              type="email" 
+              [(ngModel)]="newsletterEmail" 
+              name="email" 
+              placeholder="Your email address" 
+              required
+              class="w-full bg-gray-800 text-sm text-white rounded-lg px-3 py-2 border border-gray-700 focus:outline-none focus:border-emerald-500"
+            />
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs py-2.5 rounded-lg transition-colors shadow">
+              Subscribe Now
+            </button>
+          </form>
+        }
+      </div>
+
+    </div>
+  </div>
+</footer>
